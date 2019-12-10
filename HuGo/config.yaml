@@ -1,7 +1,7 @@
 # hugo server --minify --themesDir ... --baseURL=http://0.0.0.0:1313/example
 
-baseURL: https://hello-world-example.github.io/Template-Hugo/
-title: Template-Hugo
+baseURL: https://hello-world-example.github.io/Redis/
+title: Redis
 theme: book
 disableKinds: ['taxonomy', 'taxonomyTerm']
 publishDir: '../docs'
@@ -33,7 +33,7 @@ params:
 
   # Set source repository location.
   # Used for 'Last Modified' and 'Edit this page' links.
-  BookRepo: https://github.com/hello-world-example/Template-Hugo
+  BookRepo: https://github.com/hello-world-example/Redis
 
   # Enable "Edit this page" links for 'doc' page type.
   # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.
