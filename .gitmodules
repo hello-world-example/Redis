@@ -1,0 +1,3 @@
+[submodule "HuGo/themes/book"]
+	path = HuGo/themes/book
+	url = https://github.com/o-fork/hugo-book

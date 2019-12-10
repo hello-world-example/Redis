@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/_sidebar/</loc>
+    <lastmod>2019-09-01T17:23:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/docs/hidden/</loc>
+    <lastmod>2019-09-01T17:23:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/docs/shortcodes/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/docs/with-toc/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/docs/without-toc/</loc>
+    <lastmod>2019-09-01T17:23:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/docs/</loc>
+    <lastmod>2019-09-01T17:23:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Template-Hugo/</loc>
+    <lastmod>2019-09-01T17:23:31+08:00</lastmod>
+  </url>
+  
+</urlset>
