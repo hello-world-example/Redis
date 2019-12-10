@@ -15,49 +15,43 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hello-world-example.github.io/Redis/_sidebar/</guid>
-      <description> 简介
- 示例
- 默认带目录 设置不带目录 特有功能
-   </description>
+      <description> 监控  INFO Redis Manager 监控指标 SLOWLOG   </description>
     </item>
     
     <item>
       <title></title>
-      <link>https://hello-world-example.github.io/Redis/docs/hidden/</link>
+      <link>https://hello-world-example.github.io/Redis/docs/Monitor/INFO/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hello-world-example.github.io/Redis/docs/hidden/</guid>
-      <description>This page is hidden in menu Quondam non pater est dignior ille Eurotas Latent te facies Lorem markdownum arma ignoscas vocavit quoque ille texit mandata mentis ultimus, frementes, qui in vel. Hippotades Peleus pennas conscia cuiquam Caeneus quas.
- Pater demittere evincitque reddunt Maxime adhuc pressit huc Danaas quid freta Soror ego Luctus linguam saxa ultroque prior Tatiumque inquit Saepe liquitur subita superata dederat Anius sudor  Cum honorum Latona O fallor in sustinui iussorum equidem.</description>
+      <guid>https://hello-world-example.github.io/Redis/docs/Monitor/INFO/</guid>
+      <description>INFO 命令  server: Redis服务器的一般信息 clients: 客户端的连接部分 memory: 内存消耗相关信息 persistence: RDB 和 AOF 相关信息 stats: 一般统计 replication: 主/从复制信息 cpu: 统计CPU的消耗 commandstats: Redis命令统计 cluster: Redis集群信息 keyspace: 数据库的相关统计  Server ✔️    指标 描述 参考值     redis_version 版本 5.0.4   redis_build_id 构建 ID 2325020596d7902e   redis_mode 服务器模式 standalone、 sentinel、 cluster   os Redis 服务器的宿主操作系统    arch_bits 架构（32 或 64 位） 64   multiplexing_api Redis 使用的事件循环机制 epoll   atomicvar_api Redis 使用的 Atomicvar API atomic-builtin   gcc_version 编译 Redis 时所使用的 GCC 版本    process_id 进程的 PID    run_id 标识Redis服务器的随机值（将由Sentinel和Cluster使用） cff1f.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://hello-world-example.github.io/Redis/docs/shortcodes/</link>
+      <link>https://hello-world-example.github.io/Redis/docs/Monitor/Redis-Manager-Metrics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hello-world-example.github.io/Redis/docs/shortcodes/</guid>
-      <description>各种样式 折叠 Default {{&amp;lt; expand &amp;gt;}} ## Markdown content Lorem markdownum insigne... {{&amp;lt; /expand &amp;gt;}}  Expand ↕  Markdown content Lorem markdownum insigne&amp;hellip;    With Custom Label {{&amp;lt; expand &amp;#34;Custom Label&amp;#34; &amp;#34;...&amp;#34; &amp;gt;}} ## Markdown content Lorem markdownum insigne... {{&amp;lt; /expand &amp;gt;}}  Custom Label ...  Markdown content Lorem markdownum insigne. Olympo signis Delphis! Retexi Nereius nova develat stringit, frustra Saturnius uteroque inter! Oculis non ritibus Telethusa protulit, sed sed aere valvis inhaesuro Pallas animam: qui quid, ignes.</description>
+      <guid>https://hello-world-example.github.io/Redis/docs/Monitor/Redis-Manager-Metrics/</guid>
+      <description>Redis Manager 监控指标  https://github.com/ngbdf/redis-manager
+@see: com.newegg.ec.redis.entity.NodeInfo
+    指标 描述 来源     expires Key 的个数    keys 有过期时间的 Key 的个数    blocked_clients 正在等待阻塞命令的客户端的数量
+（BLPOP、BRPOP、BRPOPLPUSH） INFO clients
+blocked_clients   connected_clients 已连接客户端的数量 INFO clients
+connected_clients   [Bug] commands_processed 处理的命令数 INFO Stats
+total_commands_processed   [Bug] connections_received 创建连接个数，如果新创建连接过多，过度地创建和销毁连接对性能有影响，说明短连接严重或连接池使用有问题，需调研代码的连接设置 INFO Stats
+total_connections_received   instantaneous_ops_per_sec 每秒处理的命令数 INFO Stats
+instantaneous_ops_per_sec   [Bug] keyspace_hits_ratio 命中率</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://hello-world-example.github.io/Redis/docs/with-toc/</link>
+      <link>https://hello-world-example.github.io/Redis/docs/Monitor/SLOWLOG/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hello-world-example.github.io/Redis/docs/with-toc/</guid>
-      <description>默认带导航 Cognita laeva illo fracta Lorem markdownum pavent auras, surgit nunc cingentibus libet Laomedonque que est. Pastor An arbor filia foedat, ne fugit aliter, per. Helicona illas et callida neptem est Oresitrophos caput, dentibus est venit. Tenet reddite famuli praesentem fortibus, quaeque vis foret si frondes gelidos gravidae circumtulit inpulit armenta nativum.
- Te at cruciabere vides rubentis manebo Maturuit in praetemptat ruborem ignara postquam habitasse Subitarum supplevit quoque fontesque venabula spretis modo Montis tot est mali quasque gravis Quinquennem domus arsit ipse Pellem turis pugnabant locavit  Natus quaerere Pectora et sine mulcere, coniuge dum tincta incurvae.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://hello-world-example.github.io/Redis/docs/without-toc/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://hello-world-example.github.io/Redis/docs/without-toc/</guid>
-      <description>不使用导航 Tanto oblite Lorem markdownum pectora novis patenti igne sua opus aurae feras materiaque illic demersit imago et aristas questaque posset. Vomit quoque suo inhaesuro clara. Esse cumque, per referri triste. Ut exponit solisque communis in tendens vincetis agisque iamque huic bene ante vetat omina Thebae rates. Aeacus servat admonitu concidit, ad resimas vultus et rugas vultu dignamque Siphnon.
-Quam iugulum regia simulacra, plus meruit humo pecorumque haesit, ab discedunt dixit: ritu pharetramque.</description>
+      <guid>https://hello-world-example.github.io/Redis/docs/Monitor/SLOWLOG/</guid>
+      <description>SlowLog 慢查日志 获取 SlowLog 配置 &amp;gt; CONFIG GET slowlog* 1) &amp;#34;slowlog-log-slower-than&amp;#34; 2) &amp;#34;10000&amp;#34; 3) &amp;#34;slowlog-max-len&amp;#34; 4) &amp;#34;128&amp;#34; 设置 SlowLog 配置 &amp;gt; CONFIG SET slowlog-max-len 256 OK slowlog-log-slower-than Redis 命令的执行分为以下 步骤 发送、排队、执行、返回 ，slowlog 只统计 执行 阶段是时间，没有慢查询并不代表客户端没有超时。
+ slowlog-log-slower-than 的单位是 微妙（1秒=1000000微秒），默认值 10000 = 10ms  CONFIG SET slowlog-log-slower-than 0 记录所有日志 CONFIG SET slowlog-log-slower-than -1 关闭慢查  slowlog-max-len 慢查日志保存的队列长度，是个 FIFO 队列  获取慢查日志 # 获取2条慢查日志 &amp;gt; SLOWLOG GET 2 1) 1) (integer) 2544 # 唯一ID 2) (integer) 1575910861 # 查询的时间戳 3) (integer) 14919 # 查询耗时，微妙，即 14毫秒 4) 1) &amp;#34;SETBIT&amp;#34;	# 执行的命令	2) &amp;#34;test:key1&amp;#34; # 命令参数 3) &amp;#34;42753506&amp;#34; 4) &amp;#34;1&amp;#34; 5) &amp;#34;172.</description>
     </item>
     
   </channel>

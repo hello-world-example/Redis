@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redis Manager Metrics | Redis</title>
+
+
+<link rel="stylesheet" href="/Redis/book.min.05402b3d83c7a80891f3f52961534d5b3166566392661e70150394f237b70636.css">
+
+
+
+
+<link rel="icon" href="/Redis/favicon.png" type="image/x-icon">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" style="display: none" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="https://hello-world-example.github.io/Redis/">Redis</a>
+</h2>
+
+
+
+
+
+
+    
+  
+  
+  
+
+  <style>
+  nav ul a[href$="\2fRedis\2f docs\2fMonitor\2fRedis-Manager-Metrics\2f "] {
+      color: #004ed0;
+  }
+  </style>
+
+<ul>
+<li><strong>监控</strong>
+
+<ul>
+<li><a href="/Redis/docs/Monitor/INFO/">INFO</a></li>
+<li><a href="/Redis/docs/Monitor/Redis-Manager-Metrics/">Redis Manager 监控指标</a></li>
+<li><a href="/Redis/docs/Monitor/SLOWLOG/">SLOWLOG</a></li>
+</ul></li>
+</ul>
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/Redis/svg/menu.svg" alt="Menu" />
+  </label>
+  <strong>Redis Manager Metrics</strong>
+</header>
+
+      
+<article class="markdown">
+
+<h1 id="redis-manager-监控指标">Redis Manager 监控指标</h1>
+
+<blockquote>
+<p><a href="https://github.com/ngbdf/redis-manager">https://github.com/ngbdf/redis-manager</a></p>
+
+<p>@see: <a href="https://github.com/ngbdf/redis-manager/blob/master/redis-manager-dashboard/src/main/java/com/newegg/ec/redis/entity/NodeInfo.java">com.newegg.ec.redis.entity.NodeInfo</a></p>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th align="left">指标</th>
+<th align="left">描述</th>
+<th align="left">来源</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><strong>expires</strong></td>
+<td align="left">Key 的个数</td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"><strong>keys</strong></td>
+<td align="left">有过期时间的 Key 的个数</td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left">blocked_clients</td>
+<td align="left">正在等待阻塞命令的客户端的数量<br />（<a href="http://www.redis.cn/commands/blpop.html">BLPOP</a>、<a href="http://www.redis.cn/commands/brpop.html">BRPOP</a>、<a href="http://www.redis.cn/commands/brpoplpush.html">BRPOPLPUSH</a>）</td>
+<td align="left">INFO clients<br />blocked_clients</td>
+</tr>
+
+<tr>
+<td align="left"><strong>connected_clients</strong></td>
+<td align="left">已连接客户端的数量</td>
+<td align="left">INFO clients<br />connected_clients</td>
+</tr>
+
+<tr>
+<td align="left"><strong>[Bug]</strong> commands_processed</td>
+<td align="left">处理的命令数</td>
+<td align="left">INFO Stats<br />total_commands_processed</td>
+</tr>
+
+<tr>
+<td align="left"><strong>[Bug]</strong> connections_received</td>
+<td align="left">创建连接个数，如果新创建连接过多，过度地创建和销毁连接对性能有影响，说明短连接严重或连接池使用有问题，需调研代码的连接设置</td>
+<td align="left">INFO Stats<br />total_connections_received</td>
+</tr>
+
+<tr>
+<td align="left"><strong>instantaneous_ops_per_sec</strong></td>
+<td align="left">每秒处理的命令数</td>
+<td align="left">INFO Stats<br />instantaneous_ops_per_sec</td>
+</tr>
+
+<tr>
+<td align="left"><strong>[Bug]</strong> <strong>keyspace_hits_ratio</strong></td>
+<td align="left">命中率<br /><code>keyspace_hits</code>/(<code>keyspace_hits</code>+<code>keyspace_misses</code>)</td>
+<td align="left">INFO Stats<br />keyspace_hits/keyspace_misses</td>
+</tr>
+
+<tr>
+<td align="left">rejected_connections</td>
+<td align="left">由于 <code>maxclients</code> 限制而拒绝的连接数</td>
+<td align="left">INFO Stats<br />rejected_connections</td>
+</tr>
+
+<tr>
+<td align="left"><strong>&mdash;&ndash; Memory 相关 &mdash;&ndash;</strong></td>
+<td align="left"><strong>&mdash;&ndash; Memory 相关 &mdash;&ndash;</strong></td>
+<td align="left"><strong>&mdash;&ndash; Memory 相关 &mdash;&ndash;</strong></td>
+</tr>
+
+<tr>
+<td align="left"><strong>used_memory</strong></td>
+<td align="left">分配器分配的内存</td>
+<td align="left">INFO Memory</td>
+</tr>
+
+<tr>
+<td align="left"><strong>used_memory_rss</strong></td>
+<td align="left">操作系统的角度，已分配的内存总量（俗称常驻集大小）</td>
+<td align="left">INFO Memory</td>
+</tr>
+
+<tr>
+<td align="left"><strong>used_memory_dataset</strong></td>
+<td align="left">数据集大小（used_memory减去used_memory_overhead）</td>
+<td align="left">INFO Memory</td>
+</tr>
+
+<tr>
+<td align="left">used_memory_overhead</td>
+<td align="left">服务器为管理其内部数据结构而分配的所有开销的总和</td>
+<td align="left">INFO Memory</td>
+</tr>
+
+<tr>
+<td align="left"><strong>mem_fragmentation_ratio</strong></td>
+<td align="left"><code>used_memory_rss</code> 和 <code>used_memory</code> 之间的比率，<code>rss</code> &gt; <code>used</code> ，且两者的值相差较大时，表示存在（内部或外部的）内存碎片</td>
+<td align="left">INFO Memory</td>
+</tr>
+
+<tr>
+<td align="left"><strong>&mdash;&ndash; CPU 相关 &mdash;&ndash;</strong></td>
+<td align="left"><strong>&mdash;&ndash; CPU 相关 &mdash;&ndash;</strong></td>
+<td align="left"><strong>&mdash;&ndash; CPU 相关 &mdash;&ndash;</strong></td>
+</tr>
+
+<tr>
+<td align="left"><strong>[Bug]</strong> cpu_sysd</td>
+<td align="left">Redis 服务器消耗的系统 CPU，单位秒</td>
+<td align="left">INFO CPU</td>
+</tr>
+
+<tr>
+<td align="left"><strong>[Bug]</strong> cpu_userd</td>
+<td align="left">Redis 服务器消耗的用户 CPU，单位秒</td>
+<td align="left">INFO CPU</td>
+</tr>
+
+<tr>
+<td align="left"><strong>&mdash;&ndash; SYNC 相关 &mdash;&ndash;</strong></td>
+<td align="left"><strong>&mdash;&ndash; SYNC 相关 &mdash;&ndash;</strong></td>
+<td align="left"><strong>&mdash;&ndash; SYNC 相关 &mdash;&ndash;</strong></td>
+</tr>
+
+<tr>
+<td align="left">sync_full</td>
+<td align="left">全量同步的次数（The number of full resyncs with replicas）</td>
+<td align="left">INFO Stats</td>
+</tr>
+
+<tr>
+<td align="left">sync_partial_err</td>
+<td align="left">被拒绝的增量同步次数（The number of denied partial resync requests）</td>
+<td align="left">INFO Stats</td>
+</tr>
+
+<tr>
+<td align="left">sync_partial_ok</td>
+<td align="left">被接受的增量同步次数（The number of accepted partial resync requests）</td>
+<td align="left">INFO Stats</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="read-more">Read More</h2>
+
+<ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU2NjIzNDk5NQ%3D%3D&amp;mid=2247485579&amp;idx=1&amp;sn=c13dab19e9f0fae79df096fad42b42a9">Redis运行时的10大重要指标</a></li>
+<li>sync_full - <a href="http://chenzhenianqing.com/articles/956.html">Redis 2.8版部分同步功能源码浅析-Replication Partial Resynchronization</a></li>
+<li><a href="https://blog.csdn.net/n88Lpo/article/details/78529195">Redis4.0新特性(三)-PSYNC2</a></li>
+</ul>
+</article>
+
+      
+<div class="book-footer justify-end">
+  
+  
+  <div>
+    <a href="https://github.com/hello-world-example/Redis/edit/master/HuGo/content/docs/Monitor/Redis-Manager-Metrics.md" target="_blank" rel="noopener">
+      <img src="/Redis/svg/edit.svg" alt="Edit" /> Edit this page
+    </a>
+  </div>
+  
+</div>
+
+
+      
+    </div>
+
+    
+  
+
+  <aside class="book-toc level-3 fixed">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#redis-manager-监控指标">Redis Manager 监控指标</a>
+<ul>
+<li><a href="#read-more">Read More</a></li>
+</ul></li>
+</ul>
+</nav>
+  </aside>
+
+
+
+  </main>
+  
+  
+  
+</body>
+
+</html>

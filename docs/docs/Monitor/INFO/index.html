@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I N F O | Redis</title>
+
+
+<link rel="stylesheet" href="/Redis/book.min.05402b3d83c7a80891f3f52961534d5b3166566392661e70150394f237b70636.css">
+
+
+
+
+<link rel="icon" href="/Redis/favicon.png" type="image/x-icon">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" style="display: none" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="https://hello-world-example.github.io/Redis/">Redis</a>
+</h2>
+
+
+
+
+
+
+    
+  
+  
+  
+
+  <style>
+  nav ul a[href$="\2fRedis\2f docs\2fMonitor\2fINFO\2f "] {
+      color: #004ed0;
+  }
+  </style>
+
+<ul>
+<li><strong>监控</strong>
+
+<ul>
+<li><a href="/Redis/docs/Monitor/INFO/">INFO</a></li>
+<li><a href="/Redis/docs/Monitor/Redis-Manager-Metrics/">Redis Manager 监控指标</a></li>
+<li><a href="/Redis/docs/Monitor/SLOWLOG/">SLOWLOG</a></li>
+</ul></li>
+</ul>
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/Redis/svg/menu.svg" alt="Menu" />
+  </label>
+  <strong>I N F O</strong>
+</header>
+
+      
+<article class="markdown">
+
+<h1 id="info-命令">INFO 命令</h1>
+
+<ul>
+<li><code>server</code>: Redis服务器的一般信息</li>
+<li><code>clients</code>: 客户端的连接部分</li>
+<li><code>memory</code>: 内存消耗相关信息</li>
+<li><code>persistence</code>: RDB 和 AOF 相关信息</li>
+<li><code>stats</code>: 一般统计</li>
+<li><code>replication</code>: 主/从复制信息</li>
+<li><code>cpu</code>: 统计CPU的消耗</li>
+<li><code>commandstats</code>: Redis命令统计</li>
+<li><code>cluster</code>: Redis集群信息</li>
+<li><code>keyspace</code>: 数据库的相关统计</li>
+</ul>
+
+<h2 id="server">Server ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>redis_version</strong></td>
+<td>版本</td>
+<td>5.0.4</td>
+</tr>
+
+<tr>
+<td>redis_build_id</td>
+<td>构建 ID</td>
+<td>2325020596d7902e</td>
+</tr>
+
+<tr>
+<td><strong>redis_mode</strong></td>
+<td>服务器模式</td>
+<td><code>standalone</code>、 <code>sentinel</code>、 <code>cluster</code></td>
+</tr>
+
+<tr>
+<td>os</td>
+<td>Redis 服务器的宿主操作系统</td>
+<td></td>
+</tr>
+
+<tr>
+<td>arch_bits</td>
+<td>架构（32 或 64 位）</td>
+<td>64</td>
+</tr>
+
+<tr>
+<td>multiplexing_api</td>
+<td>Redis 使用的事件循环机制</td>
+<td>epoll</td>
+</tr>
+
+<tr>
+<td>atomicvar_api</td>
+<td>Redis 使用的 Atomicvar API</td>
+<td>atomic-builtin</td>
+</tr>
+
+<tr>
+<td>gcc_version</td>
+<td>编译 Redis 时所使用的 GCC 版本</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>process_id</strong></td>
+<td>进程的 PID</td>
+<td></td>
+</tr>
+
+<tr>
+<td>run_id</td>
+<td>标识Redis服务器的随机值（将由Sentinel和Cluster使用）</td>
+<td>cff1f.{45,45}</td>
+</tr>
+
+<tr>
+<td><strong>tcp_port</strong></td>
+<td>监听端口</td>
+<td></td>
+</tr>
+
+<tr>
+<td>uptime_in_seconds</td>
+<td>自 Redis 服务器启动以来，经过的秒数</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>uptime_in_days</strong></td>
+<td>自 Redis 服务器启动以来，经过的天数</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>hz</strong></td>
+<td>serverCron 频率设置，默认 10，即 10/s</td>
+<td>10</td>
+</tr>
+
+<tr>
+<td>configured_hz</td>
+<td>同上</td>
+<td>10</td>
+</tr>
+
+<tr>
+<td>lru_clock</td>
+<td>时钟每分钟递增，用于LRU管理</td>
+<td>15663059</td>
+</tr>
+
+<tr>
+<td>executable</td>
+<td>Redis 文件的路径</td>
+<td>/xx/xx/bin/redis-server</td>
+</tr>
+
+<tr>
+<td>config_file</td>
+<td>Redis 配置文件路径</td>
+<td>/xx/xx/redis.conf</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<ul>
+<li>hz - <a href="https://www.cnblogs.com/chenpingzhao/archive/2016/02/24/5211456.html">关于Redis中的 serverCron</a></li>
+<li>lru_clock - <a href="https://www.cnblogs.com/WJ5888/p/4371647.html">Redis内存回收:LRU算法</a></li>
+</ul>
+</blockquote>
+
+<h2 id="clients">Clients ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>connected_clients</strong></td>
+<td>已连接客户端的数量（不包括通过从属服务器连接的客户端）</td>
+<td></td>
+</tr>
+
+<tr>
+<td>client_recent_max_input_buffer</td>
+<td>longest output list among current client connections</td>
+<td></td>
+</tr>
+
+<tr>
+<td>client_recent_max_output_buffer</td>
+<td>biggest input buffer among current client connections</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>blocked_clients</strong></td>
+<td>正在等待阻塞命令的客户端的数量<br />（<a href="http://www.redis.cn/commands/blpop.html">BLPOP</a>、<a href="http://www.redis.cn/commands/brpop.html">BRPOP</a>、<a href="http://www.redis.cn/commands/brpoplpush.html">BRPOPLPUSH</a>）</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="memory">Memory ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>used_memory</strong></td>
+<td>Redis使用其分配器（标准libc，jemalloc或其他分配器，例如tcmalloc）分配的字节总数</td>
+<td>49334616</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_human</strong></td>
+<td>同上</td>
+<td>47.05M</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_rss</strong></td>
+<td>从操作系统的角度，返回 Redis 已分配的内存总量（俗称常驻集大小），这是诸如 <code>top</code> 和 <code>ps</code> 之类的工具报告的数字</td>
+<td>99725312</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_rss_human</strong></td>
+<td>同上</td>
+<td>95.11M</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_peak</strong></td>
+<td>Redis 的内存消耗峰值（以字节为单位）</td>
+<td>50136424</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_peak_human</strong></td>
+<td>同上</td>
+<td>47.81M</td>
+</tr>
+
+<tr>
+<td>used_memory_peak_perc</td>
+<td>使用内存占峰值内存的百分比</td>
+<td>98.40%</td>
+</tr>
+
+<tr>
+<td>used_memory_overhead</td>
+<td>服务器为管理其内部数据结构而分配的所有开销的总和（以字节为单位）</td>
+<td>4479300</td>
+</tr>
+
+<tr>
+<td>used_memory_startup</td>
+<td>Redis在启动时消耗的初始内存大小（以字节为单位）</td>
+<td>1463240</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_dataset</strong></td>
+<td>数据集大小（used_memory减去used_memory_overhead），以字节为单位</td>
+<td>44,855,316</td>
+</tr>
+
+<tr>
+<td><strong>used_memory_dataset_perc</strong></td>
+<td>used_memory_dataset 占净内存使用量的百分比（used_memory 减 used_memory_startup）</td>
+<td>93.70%</td>
+</tr>
+
+<tr>
+<td>allocator_allocated</td>
+<td><del>官方未解释</del></td>
+<td>49598712</td>
+</tr>
+
+<tr>
+<td>allocator_active</td>
+<td><del>官方未解释</del></td>
+<td>51957760</td>
+</tr>
+
+<tr>
+<td>allocator_resident</td>
+<td><del>官方未解释</del></td>
+<td>57466880</td>
+</tr>
+
+<tr>
+<td><strong>total_system_memory</strong></td>
+<td>Redis 主机具有的内存总量</td>
+<td>4018974720</td>
+</tr>
+
+<tr>
+<td><strong>total_system_memory_human</strong></td>
+<td>同上</td>
+<td>3.74G</td>
+</tr>
+
+<tr>
+<td>used_memory_lua</td>
+<td>引擎所使用的内存大小（以字节为单位）</td>
+<td>37888</td>
+</tr>
+
+<tr>
+<td>used_memory_lua_human</td>
+<td>同上</td>
+<td>37.00K</td>
+</tr>
+
+<tr>
+<td>used_memory_scripts</td>
+<td>缓存的 Lua 脚本使用的字节数</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>used_memory_scripts_human</td>
+<td>同上</td>
+<td>0B</td>
+</tr>
+
+<tr>
+<td>number_of_cached_scripts</td>
+<td><del>官方未解释</del> 缓存的 Lua 脚本个数</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>maxmemory</td>
+<td>配置的最大内存大小</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>maxmemory_human</td>
+<td>同上</td>
+<td>0B</td>
+</tr>
+
+<tr>
+<td><strong>maxmemory_policy</strong></td>
+<td>淘汰策略</td>
+<td>noeviction</td>
+</tr>
+
+<tr>
+<td>allocator_frag_ratio</td>
+<td><del>官方未解释</del></td>
+<td>1.05</td>
+</tr>
+
+<tr>
+<td>allocator_frag_bytes</td>
+<td><del>官方未解释</del></td>
+<td>2359048</td>
+</tr>
+
+<tr>
+<td>allocator_rss_ratio</td>
+<td><del>官方未解释</del></td>
+<td>1.11</td>
+</tr>
+
+<tr>
+<td>allocator_rss_bytes</td>
+<td><del>官方未解释</del></td>
+<td>5509120</td>
+</tr>
+
+<tr>
+<td>rss_overhead_ratio</td>
+<td><del>官方未解释</del></td>
+<td>1.74</td>
+</tr>
+
+<tr>
+<td>rss_overhead_bytes</td>
+<td><del>官方未解释</del></td>
+<td>42258432</td>
+</tr>
+
+<tr>
+<td>mem_fragmentation_ratio</td>
+<td><code>used_memory_rss</code> 和 <code>used_memory</code> 之间的比率</td>
+<td>2.00</td>
+</tr>
+
+<tr>
+<td>mem_fragmentation_bytes</td>
+<td><del>官方未解释</del></td>
+<td>50431712</td>
+</tr>
+
+<tr>
+<td>mem_not_counted_for_evict</td>
+<td><del>官方未解释</del></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>mem_replication_backlog</td>
+<td><del>官方未解释</del></td>
+<td>1048576</td>
+</tr>
+
+<tr>
+<td>mem_clients_slaves</td>
+<td><del>官方未解释</del></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>mem_clients_normal</td>
+<td><del>官方未解释</del></td>
+<td>168148</td>
+</tr>
+
+<tr>
+<td>mem_aof_buffer</td>
+<td><del>官方未解释</del></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>mem_allocator</td>
+<td>在编译时指定的， Redis 所使用的内存分配器。可以是 libc 、 jemalloc 或者 tcmalloc</td>
+<td>jemalloc-5.1.0</td>
+</tr>
+
+<tr>
+<td>active_defrag_running</td>
+<td>碎片整理是否正在运行</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>lazyfree_pending_objects</td>
+<td>等待释放的对象数</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<ul>
+<li><p>在理想情况下， <code>used_memory_rss</code> 的值应该只比 <code>used_memory</code> 稍微高一点儿。当 <code>rss</code> &gt; <code>used</code> ，且两者的值相差较大时，表示存在（内部或外部的）内存碎片。内存碎片的比率可以通过 <code>mem_fragmentation_ratio</code> 的值看出。</p></li>
+
+<li><p>当 used &gt; rss 时，表示 Redis 的部分内存被操作系统换出到交换空间了，在这种情况下，操作可能会产生明显的延迟。由于Redis无法控制其分配的内存如何映射到内存页，因此常住内存（used_memory_rss）很高通常是内存使用量激增的结果。</p></li>
+
+<li><p>当 Redis 释放内存时，内存将返回给分配器，分配器可能会，也可能不会，将内存返还给操作系统。如果 Redis 释放了内存，却没有将内存返还给操作系统，那么 used_memory 的值可能和操作系统显示的 Redis 内存占用并不一致。查看 used_memory_peak 的值可以验证这种情况是否发生。</p></li>
+</ul>
+
+<p>要获得有关服务器内存的其他内省信息，可以参考 <a href="https://redis.io/commands/memory-stats"><code>MEMORY STATS</code></a> 和 <a href="https://redis.io/commands/memory-doctor"><code>MEMORY DOCTOR</code></a>。</p>
+</blockquote>
+
+<h2 id="persistence">Persistence ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>loading</td>
+<td>否正在进行 转储文件（dump）的加载</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>changes_since_last_save</td>
+<td>上次调用 <code>SAVE</code> 或者 <code>BGSAVE</code> 以来，在数据集中产生变化的操作的数量</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>RDB</strong></td>
+<td>&mdash;&ndash;</td>
+<td>&mdash;&ndash;</td>
+</tr>
+
+<tr>
+<td>rdb_changes_since_last_save</td>
+<td>自上次转储以来的更改次数</td>
+<td>8281</td>
+</tr>
+
+<tr>
+<td>rdb_bgsave_in_progress</td>
+<td>RDB 文件是否正在保存</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>rdb_last_save_time</td>
+<td>上次成功保存 RDB 的时间戳</td>
+<td>1575914342</td>
+</tr>
+
+<tr>
+<td>rdb_last_bgsave_status</td>
+<td>上次RDB保存操作的状态</td>
+<td>ok</td>
+</tr>
+
+<tr>
+<td>rdb_last_bgsave_time_sec</td>
+<td>上次RDB保存操作的持续时间（以秒为单位）</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>rdb_current_bgsave_time_sec</td>
+<td>正在进行的RDB保存操作的持续时间</td>
+<td>-1</td>
+</tr>
+
+<tr>
+<td>rdb_last_cow_size</td>
+<td>上次 RDB 保存操作期间 copy-on-write 分配的字节大小</td>
+<td>9605120</td>
+</tr>
+
+<tr>
+<td><strong>AOF</strong></td>
+<td>&mdash;&ndash;</td>
+<td>&mdash;&ndash;</td>
+</tr>
+
+<tr>
+<td>aof_enabled</td>
+<td>是否正在 AOF</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>aof_rewrite_in_progress</td>
+<td>是否正在 AOF</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>aof_rewrite_scheduled</td>
+<td>RDB 保存操作完成，是否安排进行 AOF</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>aof_last_rewrite_time_sec</td>
+<td>上次 AOF 重写操作的持续时间，以秒为单位</td>
+<td>-1</td>
+</tr>
+
+<tr>
+<td>aof_current_rewrite_time_sec</td>
+<td>正在进行的AOF重写操作的持续时间</td>
+<td>-1</td>
+</tr>
+
+<tr>
+<td>aof_last_bgrewrite_status</td>
+<td>上次 AOF 重写操作的状态</td>
+<td>ok</td>
+</tr>
+
+<tr>
+<td>aof_last_write_status</td>
+<td>上次 AOF 写入操作的状态</td>
+<td>ok</td>
+</tr>
+
+<tr>
+<td>aof_last_cow_size</td>
+<td>上次 AOF 重写操作期间 copy-on-write 分配的字节大小</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td><strong>如果启用了 AOF</strong></td>
+<td>&mdash;&ndash;</td>
+<td>&mdash;&ndash;</td>
+</tr>
+
+<tr>
+<td><strong>aof_current_size</strong></td>
+<td>当前的AOF文件大小</td>
+<td></td>
+</tr>
+
+<tr>
+<td>aof_base_size</td>
+<td>上次启动或重写时的AOF文件大小</td>
+<td></td>
+</tr>
+
+<tr>
+<td>aof_pending_rewrite</td>
+<td>指示AOF重写操作是否会在当前RDB保存操作完成后立即执行的标志</td>
+<td></td>
+</tr>
+
+<tr>
+<td>aof_buffer_length</td>
+<td>AOF 缓冲区大小</td>
+<td></td>
+</tr>
+
+<tr>
+<td>aof_rewrite_buffer_length</td>
+<td>AOF 重写缓冲区大小</td>
+<td></td>
+</tr>
+
+<tr>
+<td>aof_pending_bio_fsync</td>
+<td>在后台 IO 队列中等待 fsync 处理的任务数</td>
+<td></td>
+</tr>
+
+<tr>
+<td>aof_delayed_fsync</td>
+<td>延迟 fsync 计数器</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>正在执行加载操作</strong></td>
+<td>&mdash;&ndash;</td>
+<td>&mdash;&ndash;</td>
+</tr>
+
+<tr>
+<td>loading_start_time</td>
+<td>加载操作的开始时间</td>
+<td></td>
+</tr>
+
+<tr>
+<td>loading_total_bytes</td>
+<td>文件总大小</td>
+<td></td>
+</tr>
+
+<tr>
+<td>loading_loaded_bytes</td>
+<td>已经加载的字节数</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>loading_loaded_perc</strong></td>
+<td>已经加载的百分比</td>
+<td></td>
+</tr>
+
+<tr>
+<td><strong>loading_eta_seconds</strong></td>
+<td>预计加载完成所需的剩余秒数</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="stats">Stats ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>total_connections_received</td>
+<td>服务器 接收/创建 的连接总数</td>
+<td>1508279</td>
+</tr>
+
+<tr>
+<td>total_commands_processed</td>
+<td>服务器处理的命令总数</td>
+<td>46205630</td>
+</tr>
+
+<tr>
+<td><strong>instantaneous_ops_per_sec</strong></td>
+<td>每秒处理的命令数</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>total_net_input_bytes</td>
+<td>网络入口流量字节数</td>
+<td>45628947259</td>
+</tr>
+
+<tr>
+<td>total_net_output_bytes</td>
+<td>网络出口流量字节数</td>
+<td>21817965728</td>
+</tr>
+
+<tr>
+<td>instantaneous_input_kbps</td>
+<td>网络入口 kps</td>
+<td>0.03</td>
+</tr>
+
+<tr>
+<td>instantaneous_output_kbps</td>
+<td>网络出口 kps</td>
+<td>0.53</td>
+</tr>
+
+<tr>
+<td><strong>rejected_connections</strong></td>
+<td>由于 <code>maxclients</code> 限制而拒绝的连接数</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>sync_full</td>
+<td>全量同步的次数（The number of full resyncs with replicas）</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>sync_partial_ok</td>
+<td>被接受的增量同步次数（The number of accepted partial resync requests）</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>sync_partial_err</td>
+<td>被拒绝的增量同步次数（The number of denied partial resync requests）</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>expired_keys</td>
+<td>key 到期事件的总数</td>
+<td>59102</td>
+</tr>
+
+<tr>
+<td><em>expired_stale_perc</em></td>
+<td><del>官方未未解释</del></td>
+<td>0.00</td>
+</tr>
+
+<tr>
+<td><em>expired_time_cap_reached_count</em></td>
+<td><del>官方未未解释</del></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td><strong>evicted_keys</strong></td>
+<td>由于 <code>maxmemory</code> 限制而导致被驱逐的key的数量</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td><strong>keyspace_hits</strong></td>
+<td>在主字典中成功查找到 key 的次数</td>
+<td>1395688</td>
+</tr>
+
+<tr>
+<td><strong>keyspace_misses</strong></td>
+<td>在主字典中查找 key 失败的次数</td>
+<td>8885993</td>
+</tr>
+
+<tr>
+<td>pubsub_channels</td>
+<td>拥有客户端订阅的全局 pub/sub 通道数</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>pubsub_patterns</td>
+<td>拥有客户端订阅的全局 pub/sub 模式数</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td><strong>latest_fork_usec</strong></td>
+<td>最新 fork 操作的持续时间，以<strong>微秒</strong>为单位</td>
+<td>5372</td>
+</tr>
+
+<tr>
+<td>migrate_cached_sockets</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>slave_expires_tracked_keys</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>active_defrag_hits</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>active_defrag_misses</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>active_defrag_key_hits</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>active_defrag_key_misses</td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>sync_full - <a href="http://chenzhenianqing.com/articles/956.html">Redis 2.8版部分同步功能源码浅析-Replication Partial Resynchronization</a></p>
+</blockquote>
+
+<h2 id="replication">Replication ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>role</td>
+<td>如果实例不是任何节点的从节点，则值是”master”，如果实例从某个节点同步数据，则是”slave”，一个从节点可以是另一个从节点的主节点</td>
+<td>slave</td>
+</tr>
+
+<tr>
+<td>master_host</td>
+<td>主节点的 Host名称或 IP地址</td>
+<td>172.16.2.119</td>
+</tr>
+
+<tr>
+<td>master_port</td>
+<td>主节点的Host名称或IP地址</td>
+<td>6383</td>
+</tr>
+
+<tr>
+<td>master_link_status</td>
+<td>master 连接状态（up或者down）</td>
+<td>up</td>
+</tr>
+
+<tr>
+<td>master_last_io_seconds_ago</td>
+<td>同步延时，单位秒</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>master_sync_in_progress</td>
+<td>是否正在同步</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>master_sync_left_bytes</td>
+<td>同步完成前剩余的字节数</td>
+<td></td>
+</tr>
+
+<tr>
+<td>master_sync_last_io_seconds_ago</td>
+<td>同步操作期间自上次传输IO以来的秒数</td>
+<td></td>
+</tr>
+
+<tr>
+<td>master_link_down_since_seconds</td>
+<td>主从断开的秒数</td>
+<td></td>
+</tr>
+
+<tr>
+<td>connected_slaves</td>
+<td>已连接 从节点个数</td>
+<td></td>
+</tr>
+
+<tr>
+<td>slave_repl_offset</td>
+<td>副本复制偏移量</td>
+<td>44845771223</td>
+</tr>
+
+<tr>
+<td>slave_priority</td>
+<td>故障转移候选者的优先级</td>
+<td>100</td>
+</tr>
+
+<tr>
+<td>slave_read_only</td>
+<td>副本是否被标记为只读</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>connected_slaves</td>
+<td>链接的副本数</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>master_replid</td>
+<td>复制 ID</td>
+<td></td>
+</tr>
+
+<tr>
+<td>master_replid2</td>
+<td>同步失败后的备用复制 ID</td>
+<td></td>
+</tr>
+
+<tr>
+<td>master_repl_offset</td>
+<td>The server&rsquo;s current replication offset</td>
+<td>44845771223</td>
+</tr>
+
+<tr>
+<td>second_repl_offset</td>
+<td>The offset up to which replication IDs are accepted</td>
+<td>9072049241</td>
+</tr>
+
+<tr>
+<td>repl_backlog_active</td>
+<td>Flag indicating replication backlog is active</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>repl_backlog_size</td>
+<td>Total size in bytes of the replication backlog buffer</td>
+<td>1048576</td>
+</tr>
+
+<tr>
+<td>repl_backlog_first_byte_offset</td>
+<td>The master offset of the replication backlog buffer</td>
+<td>44844722648</td>
+</tr>
+
+<tr>
+<td>repl_backlog_histlen</td>
+<td>Size in bytes of the data in the replication backlog buffer</td>
+<td>1048576</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p><a href="https://blog.csdn.net/n88Lpo/article/details/78529195">Redis4.0新特性(三)-PSYNC2</a></p>
+</blockquote>
+
+<h2 id="cpu">CPU ✔️</h2>
+
+<blockquote>
+<p>CPU 消耗率计算公式 = ( ( <code>used_cpu_sys_now</code> - <code>used_cpu_sys_before</code> ) / ( <code>now</code> - <code>before</code>) ) * 100</p>
+
+<p><code>used_cpu_sys_now</code> : now 时间点的 <code>used_cpu_sys</code> 值</p>
+
+<p><code>used_cpu_sys_before</code> : before 时间点的 <code>used_cpu_sys</code> 值</p>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值（单位 秒）</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>used_cpu_sys</td>
+<td>内核态 所消耗的 CPU 时间（累计值）</td>
+<td>6866.187180</td>
+</tr>
+
+<tr>
+<td>used_cpu_user</td>
+<td>用户态 消耗的CPU时间（累计值）</td>
+<td>9999.339869</td>
+</tr>
+
+<tr>
+<td>used_cpu_sys_children</td>
+<td>后台进程指令，内核态 消耗的CPU时间（累计值）</td>
+<td>869.472820</td>
+</tr>
+
+<tr>
+<td>used_cpu_user_children</td>
+<td>后台进程指令，用户态 消耗的CPU时间（累计值）</td>
+<td>4437.289429</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="cluster">Cluster  ✔️</h2>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>cluster_enabled</td>
+<td>是否已启用Redis集群</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="keyspace">Keyspace  ✔️</h2>
+
+<blockquote>
+<p>dbXXX: keys=XXX,expires=XXX,avg_ttl=XXX</p>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>描述</th>
+<th>参考值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td></td>
+<td>第几个DB</td>
+<td>db0</td>
+</tr>
+
+<tr>
+<td>keys</td>
+<td>Key 的个数</td>
+<td>20243</td>
+</tr>
+
+<tr>
+<td>expires</td>
+<td>有过期时间的 Key 的个数</td>
+<td>19410</td>
+</tr>
+
+<tr>
+<td>avg_ttl</td>
+<td>平均过期时间</td>
+<td>1167346935000</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="read-more">Read More</h2>
+
+<ul>
+<li><a href="https://redis.io/commands/info">io/commands/info</a></li>
+<li><a href="http://www.redis.cn/commands/info.html">cn/commands/info.html</a></li>
+<li><a href="http://ghoulich.xninja.org/2016/10/15/how-to-monitor-redis-status/">如何监控Redis的工作状态——INFO命令详解</a></li>
+</ul>
+</article>
+
+      
+<div class="book-footer justify-end">
+  
+  
+  <div>
+    <a href="https://github.com/hello-world-example/Redis/edit/master/HuGo/content/docs/Monitor/INFO.md" target="_blank" rel="noopener">
+      <img src="/Redis/svg/edit.svg" alt="Edit" /> Edit this page
+    </a>
+  </div>
+  
+</div>
+
+
+      
+    </div>
+
+    
+  
+
+  <aside class="book-toc level-3 fixed">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#info-命令">INFO 命令</a>
+<ul>
+<li><a href="#server">Server ✔️</a></li>
+<li><a href="#clients">Clients ✔️</a></li>
+<li><a href="#memory">Memory ✔️</a></li>
+<li><a href="#persistence">Persistence ✔️</a></li>
+<li><a href="#stats">Stats ✔️</a></li>
+<li><a href="#replication">Replication ✔️</a></li>
+<li><a href="#cpu">CPU ✔️</a></li>
+<li><a href="#cluster">Cluster  ✔️</a></li>
+<li><a href="#keyspace">Keyspace  ✔️</a></li>
+<li><a href="#read-more">Read More</a></li>
+</ul></li>
+</ul>
+</nav>
+  </aside>
+
+
+
+  </main>
+  
+  
+  
+</body>
+
+</html>

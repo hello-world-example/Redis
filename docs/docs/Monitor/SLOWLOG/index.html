@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S L O W L O G | Redis</title>
+
+
+<link rel="stylesheet" href="/Redis/book.min.05402b3d83c7a80891f3f52961534d5b3166566392661e70150394f237b70636.css">
+
+
+
+
+<link rel="icon" href="/Redis/favicon.png" type="image/x-icon">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" style="display: none" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="https://hello-world-example.github.io/Redis/">Redis</a>
+</h2>
+
+
+
+
+
+
+    
+  
+  
+  
+
+  <style>
+  nav ul a[href$="\2fRedis\2f docs\2fMonitor\2fSLOWLOG\2f "] {
+      color: #004ed0;
+  }
+  </style>
+
+<ul>
+<li><strong>监控</strong>
+
+<ul>
+<li><a href="/Redis/docs/Monitor/INFO/">INFO</a></li>
+<li><a href="/Redis/docs/Monitor/Redis-Manager-Metrics/">Redis Manager 监控指标</a></li>
+<li><a href="/Redis/docs/Monitor/SLOWLOG/">SLOWLOG</a></li>
+</ul></li>
+</ul>
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/Redis/svg/menu.svg" alt="Menu" />
+  </label>
+  <strong>S L O W L O G</strong>
+</header>
+
+      
+<article class="markdown">
+
+<h1 id="slowlog-慢查日志">SlowLog 慢查日志</h1>
+
+<h2 id="获取-slowlog-配置">获取 SlowLog 配置</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; CONFIG GET slowlog*
+<span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;slowlog-log-slower-than&#34;</span>
+<span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;10000&#34;</span>
+<span style="color:#ae81ff">3</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;slowlog-max-len&#34;</span>
+<span style="color:#ae81ff">4</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;128&#34;</span></code></pre></div>
+<h2 id="设置-slowlog-配置">设置 SlowLog 配置</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; CONFIG SET slowlog-max-len <span style="color:#ae81ff">256</span>
+OK</code></pre></div>
+<h2 id="slowlog-log-slower-than">slowlog-log-slower-than</h2>
+
+<p>Redis 命令的执行分为以下 步骤 <code>发送</code>、<code>排队</code>、<code>执行</code>、<code>返回</code> ，slowlog 只统计 <code>执行</code> 阶段是时间，没有慢查询并不代表客户端没有超时。</p>
+
+<ul>
+<li><code>slowlog-log-slower-than</code> 的单位是 微妙（1秒=1000000微秒），默认值 <code>10000 = 10ms</code>
+
+<ul>
+<li><code>CONFIG SET slowlog-log-slower-than 0</code> 记录所有日志</li>
+<li><code>CONFIG SET slowlog-log-slower-than -1</code> 关闭慢查</li>
+</ul></li>
+<li><code>slowlog-max-len</code> 慢查日志保存的队列长度，是个 FIFO 队列</li>
+</ul>
+
+<h2 id="获取慢查日志">获取慢查日志</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 获取2条慢查日志</span>
+&gt; SLOWLOG GET <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>integer<span style="color:#f92672">)</span> <span style="color:#ae81ff">2544</span>          <span style="color:#75715e"># 唯一ID</span>
+   <span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>integer<span style="color:#f92672">)</span> <span style="color:#ae81ff">1575910861</span>    <span style="color:#75715e"># 查询的时间戳</span>
+   <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>integer<span style="color:#f92672">)</span> <span style="color:#ae81ff">14919</span>         <span style="color:#75715e"># 查询耗时，微妙，即 14毫秒</span>
+   <span style="color:#ae81ff">4</span><span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;SETBIT&#34;</span>			        <span style="color:#75715e"># 执行的命令</span>			
+      <span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;test:key1&#34;</span>          <span style="color:#75715e"># 命令参数</span>
+      <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;42753506&#34;</span>
+      <span style="color:#ae81ff">4</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;1&#34;</span>
+   <span style="color:#ae81ff">5</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;172.16.2.118:35329&#34;</span>    <span style="color:#75715e"># 来源 IP (4.0+)</span>
+   <span style="color:#ae81ff">6</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;&#34;</span>											<span style="color:#75715e"># 客户端名称，CLIENT SETNAME (4.0+)</span>
+<span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>integer<span style="color:#f92672">)</span> <span style="color:#ae81ff">2543</span>
+   <span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>integer<span style="color:#f92672">)</span> <span style="color:#ae81ff">1575910801</span>
+   <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>integer<span style="color:#f92672">)</span> <span style="color:#ae81ff">20633</span>
+   <span style="color:#ae81ff">4</span><span style="color:#f92672">)</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;SETBIT&#34;</span>
+      <span style="color:#ae81ff">2</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;test:key2&#34;</span>
+      <span style="color:#ae81ff">3</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;44996821&#34;</span>
+      <span style="color:#ae81ff">4</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;1&#34;</span>
+   <span style="color:#ae81ff">5</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;172.16.2.118:35329&#34;</span>
+   <span style="color:#ae81ff">6</span><span style="color:#f92672">)</span> <span style="color:#e6db74">&#34;&#34;</span></code></pre></div>
+<h2 id="read-more">Read More</h2>
+
+<ul>
+<li><a href="https://redis.io/commands/slowlog">SLOWLOG 官方文档</a></li>
+<li><a href="http://www.redis.cn/commands/slowlog.html">SLOWLOG 中文文档</a></li>
+<li><a href="https://segmentfault.com/a/1190000009915519">Redis高级功能 - 慢查询日志</a></li>
+</ul>
+</article>
+
+      
+<div class="book-footer justify-end">
+  
+  
+  <div>
+    <a href="https://github.com/hello-world-example/Redis/edit/master/HuGo/content/docs/Monitor/SLOWLOG.md" target="_blank" rel="noopener">
+      <img src="/Redis/svg/edit.svg" alt="Edit" /> Edit this page
+    </a>
+  </div>
+  
+</div>
+
+
+      
+    </div>
+
+    
+  
+
+  <aside class="book-toc level-3 fixed">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#slowlog-慢查日志">SlowLog 慢查日志</a>
+<ul>
+<li><a href="#获取-slowlog-配置">获取 SlowLog 配置</a></li>
+<li><a href="#设置-slowlog-配置">设置 SlowLog 配置</a></li>
+<li><a href="#slowlog-log-slower-than">slowlog-log-slower-than</a></li>
+<li><a href="#获取慢查日志">获取慢查日志</a></li>
+<li><a href="#read-more">Read More</a></li>
+</ul></li>
+</ul>
+</nav>
+  </aside>
+
+
+
+  </main>
+  
+  
+  
+</body>
+
+</html>
