@@ -11,6 +11,7 @@
 
     <modules>
         <module>redis-jedis</module>
+        <module>redis-lettuce</module>
     </modules>
 
     <properties>
