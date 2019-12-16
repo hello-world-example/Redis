@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jedis Pool | Redis</title>
+
+
+<link rel="stylesheet" href="/Redis/book.min.05402b3d83c7a80891f3f52961534d5b3166566392661e70150394f237b70636.css">
+
+
+
+
+<link rel="icon" href="/Redis/favicon.png" type="image/x-icon">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" style="display: none" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="https://hello-world-example.github.io/Redis/">Redis</a>
+</h2>
+
+
+
+
+
+
+    
+  
+  
+  
+
+  <style>
+  nav ul a[href$="\2fRedis\2f docs\2f Client\2fJedis-Pool\2f "] {
+      color: #004ed0;
+  }
+  </style>
+
+<ul>
+<li><strong>Client</strong>
+
+<ul>
+<li><a href="/Redis/docs/Client/Jedis-Pool/">Jedis Pool</a></li>
+<li><a href="/Redis/docs/Client/Lettuce/">Lettuce</a></li>
+</ul></li>
+<li><strong>监控</strong>
+
+<ul>
+<li><a href="/Redis/docs/Monitor/INFO/">INFO</a></li>
+<li><a href="/Redis/docs/Monitor/Redis-Manager-Metrics/">Redis Manager 监控指标</a></li>
+<li><a href="/Redis/docs/Monitor/SLOWLOG/">SLOWLOG</a></li>
+</ul></li>
+
+<li><p><strong>管理</strong></p>
+
+<ul>
+<li><em><a href="/Redis/docs/Admin/CONFIG/">CONFIG</a></em></li>
+</ul></li>
+
+<li><p><a href="/Redis/docs/FAQ/">常见问题</a></p></li>
+</ul>
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/Redis/svg/menu.svg" alt="Menu" />
+  </label>
+  <strong>Jedis Pool</strong>
+</header>
+
+      
+<article class="markdown">
+
+<h1 id="jedis-链接池">Jedis 链接池</h1>
+
+<p>Jedis 使用阻塞的 I/O，且其方法调用都是同步的，程序需要等到 Sockets 处理完 I/O 才能执行，不支持异步。</p>
+
+<p><strong>实例不是线程安全的，所以需要通过连接池来使用 Jedis</strong>。</p>
+
+<h2 id="连接池配置示例">连接池配置示例</h2>
+
+<blockquote>
+<p>官方文档 <a href="https://github.com/xetorthio/jedis/wiki/Getting-started">Getting-started</a></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">JedisPoolConfig <span style="color:#a6e22e">jedisPoolConfig</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JedisPoolConfig();
+<span style="color:#75715e">// 0
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setMinIdle</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_MIN_IDLE</span>);
+<span style="color:#75715e">// 8
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setMaxIdle</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_MAX_IDLE</span>);
+<span style="color:#75715e">// 8
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setMaxTotal</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_MAX_TOTAL</span>);
+<span style="color:#75715e">// -1
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setMaxWaitMillis</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_MAX_WAIT_MILLIS</span>);
+
+
+<span style="color:#75715e">// 1000L * 60L * 30L
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setMinEvictableIdleTimeMillis</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS</span>);
+<span style="color:#75715e">// 3
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setNumTestsPerEvictionRun</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_NUM_TESTS_PER_EVICTION_RUN</span>);
+<span style="color:#75715e">// -1
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setSoftMinEvictableIdleTimeMillis</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS</span>);
+<span style="color:#75715e">// true
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setBlockWhenExhausted</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_BLOCK_WHEN_EXHAUSTED</span>);
+<span style="color:#75715e">// 10_000
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setEvictorShutdownTimeoutMillis</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_EVICTOR_SHUTDOWN_TIMEOUT_MILLIS</span>);
+<span style="color:#75715e">// false
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setFairness</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_FAIRNESS</span>);
+
+
+<span style="color:#75715e">// false
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setTestOnCreate</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_TEST_ON_CREATE</span>);
+<span style="color:#75715e">// false
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setTestOnBorrow</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_TEST_ON_BORROW</span>);
+<span style="color:#75715e">// false
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setTestWhileIdle</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_TEST_WHILE_IDLE</span>);
+<span style="color:#75715e">// false
+</span><span style="color:#75715e"></span>jedisPoolConfig.<span style="color:#a6e22e">setTestOnReturn</span>(JedisPoolConfig.<span style="color:#a6e22e">DEFAULT_TEST_ON_RETURN</span>);
+
+<span style="color:#66d9ef">new</span> JedisPool(jedisPoolConfig, host, Protocol.<span style="color:#a6e22e">DEFAULT_PORT</span>, Protocol.<span style="color:#a6e22e">DEFAULT_TIMEOUT</span>);</code></pre></div>
+<p>使用 JedisPoolConfig 初始化配置会进行默认社会组</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">class</span> JedisPoolConfig <span style="color:#a6e22e">extends</span> GenericObjectPoolConfig {
+  
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">JedisPoolConfig</span>() {
+        <span style="color:#75715e">// 开启空闲检查
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setTestWhileIdle</span>(<span style="color:#66d9ef">true</span>);
+        <span style="color:#75715e">// Pool 中资源的最小空闲时间（单位为毫秒），达到此值后空闲资源将被移除
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setMinEvictableIdleTimeMillis</span>(60_000L);
+        <span style="color:#75715e">// 空闲资源的检测周期（单位为毫秒）
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setTimeBetweenEvictionRunsMillis</span>(30_000L);
+        <span style="color:#75715e">// 做空闲资源检测时，每次检测资源的个数。如果设置为 -1，就是对所有连接做空闲监测
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setNumTestsPerEvictionRun</span>(<span style="color:#f92672">-</span>1);
+    }
+}</code></pre></div>
+<h2 id="jedispoolconfig-配置说明">JedisPoolConfig 配置说明</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="center">默认值</th>
+<th align="center">建议值</th>
+<th>说明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><strong>minIdle</strong></td>
+<td align="center">0</td>
+<td align="center"><del>10</del></td>
+<td>【需根据业务场景】空闲链接的最小数量，负值代表没有限制，保证 Pool 内最少有指定数量的链接，即使是空闲的，使得下次可以直接使用，而无需重新创建</td>
+</tr>
+
+<tr>
+<td align="left"><strong>maxIdle</strong></td>
+<td align="center">8</td>
+<td align="center"><del>50</del></td>
+<td>【需根据业务场景】空闲链接的最大数量，负值代表没有限制，</td>
+</tr>
+
+<tr>
+<td align="left"><strong>maxTotal</strong></td>
+<td align="center">8</td>
+<td align="center"><del>100</del></td>
+<td>【需根据业务场景】<br />Pool 大小，该配置需要结合当前系统的并发量<br />如果当前业务峰值并发量在 100左右，配置成 100~150 即可<br />如果配置过小，比如默认值 8，当并发量到 10 的时候，可能前8个链接正在内使用还未归还，后2个请求无法从 Pool 中获取链接，会造成 阻塞</td>
+</tr>
+
+<tr>
+<td align="left">blockWhenExhausted</td>
+<td align="center">true</td>
+<td align="center">true</td>
+<td>当资源池用尽后，调用者是否要等待。<br />只有当值为true时，下面的 <code>maxWaitMillis</code> 才会生效</td>
+</tr>
+
+<tr>
+<td align="left"><strong>maxWaitMillis</strong></td>
+<td align="center">-1</td>
+<td align="center"><code>1000</code>(1s)</td>
+<td>当资源池连接用尽后，调用者的最大等待时间</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+
+<tr>
+<td align="left"><del>maxActive</del></td>
+<td align="center">~</td>
+<td align="center">~</td>
+<td><del>没有这个参数</del></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+
+<tr>
+<td align="left">testOnCreate</td>
+<td align="center">false</td>
+<td align="center"><code>false</code></td>
+<td>在创建链接时候 <code>PING</code>，<del>感觉没有意义</del></td>
+</tr>
+
+<tr>
+<td align="left">testOnBorrow</td>
+<td align="center">false</td>
+<td align="center"><code>false</code></td>
+<td>从 Pool 中获取的链接时候 <code>PING</code>，可以保证获取到的链接都是可用的，但是会影响性能，因为每次执行命令之前都要先 <code>PING</code> 一下</td>
+</tr>
+
+<tr>
+<td align="left"><strong>testWhileIdle</strong></td>
+<td align="center">false</td>
+<td align="center"><code>true</code></td>
+<td>链接空闲的时候检查，仅在 <code>timeBetweenEvictionRunsMillis</code> 被设置成正值（ &gt;0） 的时候才会生效</td>
+</tr>
+
+<tr>
+<td align="left">testOnReturn</td>
+<td align="center">false</td>
+<td align="center"><code>false</code></td>
+<td>把 Connection 归还给 Pool 的时候 <code>PING</code></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+
+<tr>
+<td align="left"><strong>timeBetweenEvictionRunsMillis</strong></td>
+<td align="center">-1</td>
+<td align="center"><code>30_000</code>(<code>30s</code>)</td>
+<td>空闲资源的检测周期（单位为毫秒），-1 不检查<br />把空闲时间超过<code>minEvictableIdleTimeMillis</code> 的连接断开，直到连接池中的连接数到<code>minIdle</code> 为止</td>
+</tr>
+
+<tr>
+<td align="left"><strong>minEvictableIdleTimeMillis</strong></td>
+<td align="center">180000(30m)</td>
+<td align="center"><code>60_000</code>(1m)</td>
+<td>Pool 中资源的最小空闲时间（单位为毫秒），达到此值后空闲资源将被移除</td>
+</tr>
+
+<tr>
+<td align="left"><strong>numTestsPerEvictionRun</strong></td>
+<td align="center">3</td>
+<td align="center"><code>-1</code></td>
+<td>做空闲资源检测时，每次检测资源的个数。可根据自身应用连接数进行微调，如果设置为 -1，就是对所有连接做空闲监测</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+
+<tr>
+<td align="left">jmxEnabled</td>
+<td align="center">true</td>
+<td align="center"><code>true</code></td>
+<td>建议开启，请注意应用本身也需要开启</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="关键参数设置建议">关键参数设置建议</h2>
+
+<blockquote>
+<p>来自：阿里云  <a href="https://help.aliyun.com/document_detail/98726.html#section-m2c-5kr-zfb">JedisPool资源池优化 &gt; 关键参数设置建议</a></p>
+</blockquote>
+
+<h3 id="maxtotal-最大连接数">maxTotal（最大连接数）</h3>
+
+<p>想合理设置maxTotal（最大连接数）需要考虑的因素较多，如：</p>
+
+<ul>
+<li>业务希望的 Redis 并发量；</li>
+<li>客户端执行命令时间；</li>
+<li>Redis资源，例如 <code>应用个数等 * maxTotal</code> 不能超过 Redis 的最大连接数；</li>
+<li>资源开销，例如虽然希望控制空闲连接，但又不希望因为连接池中频繁地释放和创建连接造成不必要的开销。</li>
+</ul>
+
+<p><strong>假设一次命令时间，即 borrow ~ return resource 加上 Jedis 执行命令 （ 含网络耗时）的平均耗时约为 2ms，则一个连接的 QPS 大约是 500（1s / 2ms = 500），而业务期望的 QPS 是 5000，那么理论上需要的资源池大小是 5000 / 500 = 10</strong>。</p>
+
+<p>但事实上这只是个理论值，除此之外还要预留一些资源，所以 <strong>maxTotal 可以比理论值大一些</strong>。这个值不是越大越好，一方面连接太多会占用客户端和服务端资源，另一方面对于 Redis 这种高 QPS 的服务器，如果<strong>出现大命令的阻塞，即使设置再大的资源池也无济于事</strong>。</p>
+
+<h3 id="maxidle-与-minidle">maxIdle 与 minIdle</h3>
+
+<p><strong>maxIdle 设置 Pool 中大的空闲链接，保证下次流量高峰的时候可以立即有链接可用，所以 maxIdle 实际上才是业务需要的最大连接数</strong>，maxTotal 是为了给出最大限制，所以 <strong>maxIdle 不要设置得过小，否则会有 <code>new Jedis</code>（新连接）开销</strong>，而 minIdle 是为了控制空闲资源检测。</p>
+
+<p><strong>连接池的最佳性能是 maxTotal=maxIdle</strong>，这样就避免了连接池伸缩带来的性能干扰。但如果并发量不大或者maxTotal 设置过高，则会导致不必要的连接资源浪费。</p>
+
+<p>您可以根据实际总 QPS 和调用 Redis 的客户端规模整体评估每个节点所使用的连接池大小。</p>
+
+<p>使用监控获取合理值</p>
+
+<p>在实际环境中，比较可靠的方法是通过监控来尝试获取参数的最佳值。可以考虑通过 JMX 等方式实现监控，从而找到合理值。</p>
+
+<p>如果 <code>minIdle = maxIdle = maxTotal</code> 则链接不会存在空闲回收、使用的时候创建新链接的情况，但是会浪费一定的资源，因为并发量的小的情况的，大部分链接是空闲的</p>
+
+<p>如果资源不足，会看到以下异常 <code>redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool</code></p>
+
+<h2 id="read-more">Read More</h2>
+
+<ul>
+<li>阿里云 Redis 最佳实践 <a href="https://help.aliyun.com/document_detail/98726.html">JedisPool资源池优化</a></li>
+<li>- ❤ <a href="https://help.aliyun.com/knowledge_detail/71967.html">Jedis常见异常汇总</a></li>
+<li>官方 Github <a href="https://github.com/xetorthio/jedis">xetorthio/jedis</a> &gt; <a href="https://help.aliyun.com/document_detail/98726.html#title-864-sx8-ria">参数说明</a></li>
+</ul>
+</article>
+
+      
+<div class="book-footer justify-between">
+  
+  <div>
+    
+    <a href="https://github.com/hello-world-example/Redis/commit/b51c2080d7409efec65298121273c70bb66807b9" title='Last modified Dec 16, 2019 by 杨凯彬' target="_blank" rel="noopener">
+      <img src="/Redis/svg/calendar.svg" alt="Changed" /> Dec 16, 2019
+    </a>
+  </div>
+  
+  
+  <div>
+    <a href="https://github.com/hello-world-example/Redis/edit/master/HuGo/content/docs/Client/Jedis-Pool.md" target="_blank" rel="noopener">
+      <img src="/Redis/svg/edit.svg" alt="Edit" /> Edit this page
+    </a>
+  </div>
+  
+</div>
+
+
+      
+    </div>
+
+    
+  
+
+  <aside class="book-toc level-3 fixed">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#jedis-链接池">Jedis 链接池</a>
+<ul>
+<li><a href="#连接池配置示例">连接池配置示例</a></li>
+<li><a href="#jedispoolconfig-配置说明">JedisPoolConfig 配置说明</a></li>
+<li><a href="#关键参数设置建议">关键参数设置建议</a>
+<ul>
+<li><a href="#maxtotal-最大连接数">maxTotal（最大连接数）</a></li>
+<li><a href="#maxidle-与-minidle">maxIdle 与 minIdle</a></li>
+</ul></li>
+<li><a href="#read-more">Read More</a></li>
+</ul></li>
+</ul>
+</nav>
+  </aside>
+
+
+
+  </main>
+  
+  
+  
+</body>
+
+</html>

@@ -12,3 +12,5 @@ headless: true
 - **管理**
   - *[CONFIG]({{< relref "/docs/Admin/CONFIG.md" >}})*
 
+-  [常见问题]({{< relref "/docs/FAQ.md" >}})
+

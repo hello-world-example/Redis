@@ -15,7 +15,48 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hello-world-example.github.io/Redis/_sidebar/</guid>
-      <description> 监控  INFO Redis Manager 监控指标 SLOWLOG   </description>
+      <description> Client  Jedis Pool Lettuce  监控  INFO Redis Manager 监控指标 SLOWLOG  管理
+ CONFIG  常见问题
+  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Redis/docs/Admin/CONFIG/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Redis/docs/Admin/CONFIG/</guid>
+      <description> CONFIG </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Redis/docs/Client/Jedis-Pool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Redis/docs/Client/Jedis-Pool/</guid>
+      <description>Jedis 链接池 Jedis 使用阻塞的 I/O，且其方法调用都是同步的，程序需要等到 Sockets 处理完 I/O 才能执行，不支持异步。
+实例不是线程安全的，所以需要通过连接池来使用 Jedis。
+连接池配置示例  官方文档 Getting-started
+ JedisPoolConfig jedisPoolConfig = new JedisPoolConfig(); // 0 jedisPoolConfig.setMinIdle(JedisPoolConfig.DEFAULT_MIN_IDLE); // 8 jedisPoolConfig.setMaxIdle(JedisPoolConfig.DEFAULT_MAX_IDLE); // 8 jedisPoolConfig.setMaxTotal(JedisPoolConfig.DEFAULT_MAX_TOTAL); // -1 jedisPoolConfig.setMaxWaitMillis(JedisPoolConfig.DEFAULT_MAX_WAIT_MILLIS); // 1000L * 60L * 30L jedisPoolConfig.setMinEvictableIdleTimeMillis(JedisPoolConfig.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS); // 3 jedisPoolConfig.setNumTestsPerEvictionRun(JedisPoolConfig.DEFAULT_NUM_TESTS_PER_EVICTION_RUN); // -1 jedisPoolConfig.setSoftMinEvictableIdleTimeMillis(JedisPoolConfig.DEFAULT_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS); // true jedisPoolConfig.setBlockWhenExhausted(JedisPoolConfig.DEFAULT_BLOCK_WHEN_EXHAUSTED); // 10_000 jedisPoolConfig.setEvictorShutdownTimeoutMillis(JedisPoolConfig.DEFAULT_EVICTOR_SHUTDOWN_TIMEOUT_MILLIS); // false jedisPoolConfig.setFairness(JedisPoolConfig.DEFAULT_FAIRNESS); // false jedisPoolConfig.setTestOnCreate(JedisPoolConfig.DEFAULT_TEST_ON_CREATE); // false jedisPoolConfig.setTestOnBorrow(JedisPoolConfig.DEFAULT_TEST_ON_BORROW); // false jedisPoolConfig.setTestWhileIdle(JedisPoolConfig.DEFAULT_TEST_WHILE_IDLE); // false jedisPoolConfig.setTestOnReturn(JedisPoolConfig.DEFAULT_TEST_ON_RETURN); new JedisPool(jedisPoolConfig, host, Protocol.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Redis/docs/Client/Lettuce/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Redis/docs/Client/Lettuce/</guid>
+      <description> Lettuce </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Redis/docs/FAQ/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Redis/docs/FAQ/</guid>
+      <description> 常见问题 </description>
     </item>
     
     <item>
