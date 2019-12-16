@@ -45,7 +45,20 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hello-world-example.github.io/Redis/docs/FAQ/</guid>
-      <description> 常见问题 </description>
+      <description> 常见问题  阿里云数据库 Redis 版 &amp;gt; 常见问题： https://help.aliyun.com/knowledge_list/48238.html
+ </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Redis/docs/Monitor/CLIENT/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Redis/docs/Monitor/CLIENT/</guid>
+      <description>Client 相关命令 CLIENT LIST  http://www.redis.cn/commands/client-list.html
+ 返回所有连接到服务器的客户端信息和统计数据
+   字段 描述 参考值     id 客户端 ID 1645707   addr 客户端的地址和端口 172.16.2.85:53252   name CLIENT SETNAME 设置的名称(设置成 &amp;quot;&amp;quot; 删除设置)
+CLIENT GETNAME 获取当前客户端名称    age 以秒计算的已连接时长 103   idle 以秒计算的空闲时长 103   db 该客户端正在使用的数据库 ID 0   sub 已订阅频道的数量 0   psub 已订阅频道的数量 0   cmd  ping   flags O: 客户端是 MONITOR 模式下的附属节点（slave） S: 客户端是一般模式下（normal）的附属节点 M: 客户端是主节点（master） x: 客户端正在执行事务 b: 客户端正在等待阻塞事件 i: 客户端正在等待 VM I/O 操作（已废弃） d: 一个受监视（watched）的键已被修改， EXEC 命令将失败 c: 在将回复完整地写出之后，关闭链接 u: 客户端未被阻塞（unblocked） U: 通过Unix套接字连接的客户端 r : 客户端是只读模式的集群节点 A: 尽可能快地关闭连接 N: 未设置任何 flag N   &amp;hellip; &amp;hellip; &amp;hellip;    CLIENT KILL  http://www.</description>
     </item>
     
     <item>
