@@ -10,25 +10,25 @@ public class Main {
 
     public static void main(String[] args) {
 
-RedisClient redisClient = RedisClient.create("redis://password@localhost:6379/0");
+        RedisClient redisClient = RedisClient.create("redis://password@localhost:6379/0");
 
-try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
+        try (StatefulRedisConnection<String, String> connection = redisClient.connect()) {
 
-    // ❤❤❤ 估计是 Spring Boot 2 基于 Spring 5，与新增的 Webflux 比较搭  ❤❤❤
-    final RedisReactiveCommands<String, String> reactive = connection.reactive();
+            // ❤❤❤ 估计是 Spring Boot 2 基于 Spring 5，与新增的 Webflux 比较搭  ❤❤❤
+            final RedisReactiveCommands<String, String> reactive = connection.reactive();
 
-    // 异步请求
-    final RedisAsyncCommands<String, String> async = connection.async();
+            // 异步请求
+            final RedisAsyncCommands<String, String> async = connection.async();
 
-    // 同步请求
-    RedisCommands<String, String> syncCommands = connection.sync();
+            // 同步请求
+            RedisCommands<String, String> syncCommands = connection.sync();
 
-    syncCommands.set("key", "Hello, Redis!");
+            syncCommands.set("key", "Hello, Redis!");
 
-}
+        }
 
 
-redisClient.shutdown();
+        redisClient.shutdown();
     }
 
 }
